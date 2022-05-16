@@ -152,7 +152,7 @@ class CreateTodosScreen extends StatelessWidget {
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text("Created Sucessfully")));
-                          context.read<TodosProvider>().fetchTodos();
+                          // context.read<TodosProvider>().fetchTodos();
                           Navigator.pop(context);
                         }
                       },

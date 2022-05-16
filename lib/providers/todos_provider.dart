@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,9 @@ class TodosProvider extends ChangeNotifier {
   final _dio = Dio();
   List<Todos> _todos = [];
   List<Todos> get todos => _todos;
+
+  List<Todos> _respnseTodos = [];
+  List<Todos> get responseTodos => _respnseTodos;
 
   bool _isFetchData = false;
   bool get isFetchData => _isFetchData;
@@ -46,8 +51,11 @@ class TodosProvider extends ChangeNotifier {
           await _dio.get("https://jsonplaceholder.typicode.com/todos");
       if (response.statusCode == 200) {
         final _temp = response.data;
+
         final _data = List.from(_temp);
         _todos = _data.map((e) => Todos.fromJson(e)).toList();
+        print("_todos data format");
+        print(_todos);
       } else {
         _hasError = true;
         _errorMessage = "serve errror";
@@ -80,9 +88,15 @@ class TodosProvider extends ChangeNotifier {
       print(_response.data);
       print(_response.statusCode);
       if (_response.statusCode == 201) {
-        print("hell");
-
         _isCreatingData = false;
+        print("response after fromjson");
+        print(Todos.fromJson(_response.data));
+        Todos resTodo = Todos.fromJson(_response.data);
+
+        _todos.insert(0, resTodo);
+
+        print(resTodo);
+        print(_respnseTodos);
       } else {
         print("heeeeeeeeeeeeee");
         _hasCreateError = true;
