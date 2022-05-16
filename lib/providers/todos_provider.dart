@@ -109,11 +109,12 @@ class TodosProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> updateTodos(
-      {required String title,
-      required int userId,
-      required int id,
-      required int index}) async {
+  Future<void> updateTodos({
+    required String title,
+    required int userId,
+    required int id,
+    required int index,
+  }) async {
     try {
       final _body = {
         "userId": userId,
