@@ -10,9 +10,6 @@ class TodosProvider extends ChangeNotifier {
   List<Todos> _todos = [];
   List<Todos> get todos => _todos;
 
-  List<Todos> _respnseTodos = [];
-  List<Todos> get responseTodos => _respnseTodos;
-
   bool _isFetchData = false;
   bool get isFetchData => _isFetchData;
 
@@ -96,7 +93,6 @@ class TodosProvider extends ChangeNotifier {
         _todos.insert(0, resTodo);
 
         print(resTodo);
-        print(_respnseTodos);
       } else {
         print("heeeeeeeeeeeeee");
         _hasCreateError = true;
@@ -114,7 +110,10 @@ class TodosProvider extends ChangeNotifier {
   }
 
   Future<void> updateTodos(
-      {required String title, required int userId, required int id}) async {
+      {required String title,
+      required int userId,
+      required int id,
+      required int index}) async {
     try {
       final _body = {
         "userId": userId,
@@ -128,12 +127,15 @@ class TodosProvider extends ChangeNotifier {
         "https://jsonplaceholder.typicode.com/todos/1",
         data: _body,
       );
+      Todos updateResponse = Todos.fromJson(_response.data);
       print(_response.data);
       print(_response.statusCode);
       if (_response.statusCode == 200) {
         print("hell");
 
         _isCreatingData = false;
+
+        _todos[index] = updateResponse;
       } else {
         print("heeeeeeeeeeeeee");
         _hasCreateError = true;
@@ -150,7 +152,7 @@ class TodosProvider extends ChangeNotifier {
     }
   }
 
-  Future<void> deleteTodos({required int id}) async {
+  Future<void> deleteTodos({required int id, required int index}) async {
     try {
       _resetCreateStatus();
       _isCreatingData = true;
@@ -162,6 +164,7 @@ class TodosProvider extends ChangeNotifier {
       print(_response.statusCode);
       if (_response.statusCode == 200) {
         _isCreatingData = false;
+        _todos.removeAt(index);
       } else {
         _hasCreateError = true;
         _createErrorMessage = "unable to update todos";

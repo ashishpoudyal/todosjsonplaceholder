@@ -67,6 +67,7 @@ class _HomePageState extends State<HomePage> {
                                 'userId': _todosProvider.todos[index].userId,
                                 'completed':
                                     _todosProvider.todos[index].completed,
+                                'index': index,
                               });
                         },
                         title: Text(
@@ -79,11 +80,25 @@ class _HomePageState extends State<HomePage> {
                                   ? TextDecoration.lineThrough
                                   : null),
                         ),
-                        subtitle: Text(_todosProvider.todos[index].title),
+                        subtitle: Text("Id : " +
+                            _todosProvider.todos[index].id.toString()),
+                        leading: Column(
+                          children: [
+                            Text(
+                              "User Id\n" +
+                                  _todosProvider.todos[index].userId.toString(),
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15,
+                              ),
+                            )
+                          ],
+                        ),
                         trailing: IconButton(
                             onPressed: () {
                               context.read<TodosProvider>().deleteTodos(
-                                  id: _todosProvider.todos[index].id);
+                                  id: _todosProvider.todos[index].id,
+                                  index: index);
 
                               if (_todosProvider.hasCreateError) {
                                 ScaffoldMessenger.of(context).showSnackBar(
@@ -92,7 +107,6 @@ class _HomePageState extends State<HomePage> {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
                                         content: Text(" deleted Sucessfully")));
-                                context.read<TodosProvider>().fetchTodos();
                               }
                             },
                             icon: Icon(

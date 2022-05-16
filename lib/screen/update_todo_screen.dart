@@ -12,6 +12,7 @@ class UpdateTodoScreen extends StatelessWidget {
     String title = args['title'];
     String id = args['id'].toString();
     String userId = args['userId'].toString();
+    int index = args['index'];
 
     TextEditingController _titleController = TextEditingController(text: title);
     TextEditingController _idController =
@@ -133,6 +134,7 @@ class UpdateTodoScreen extends StatelessWidget {
                           title: _titleController.text,
                           id: int.parse(_idController.text),
                           userId: int.parse(_userIdController.text),
+                          index: index,
                         );
                     if (_todosProvider.hasCreateError) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -140,7 +142,7 @@ class UpdateTodoScreen extends StatelessWidget {
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text("Upadated Sucessfully")));
-                      context.read<TodosProvider>().fetchTodos();
+                      // context.read<TodosProvider>().fetchTodos();
 
                       Navigator.pop(context);
                     }
