@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:todos_app/notification_api.dart';
 import 'package:todos_app/providers/todos_provider.dart';
 
 class CreateTodosScreen extends StatelessWidget {
@@ -153,6 +154,7 @@ class CreateTodosScreen extends StatelessWidget {
                           ScaffoldMessenger.of(context).showSnackBar(
                               SnackBar(content: Text("Created Sucessfully")));
                           // context.read<TodosProvider>().fetchTodos();
+                          
                           Navigator.pop(context);
                         }
                       },

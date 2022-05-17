@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:todos_app/model/todos_model.dart';
+import 'package:todos_app/notification_api.dart';
 
 class TodosProvider extends ChangeNotifier {
   final _dio = Dio();
@@ -91,6 +92,10 @@ class TodosProvider extends ChangeNotifier {
         Todos resTodo = Todos.fromJson(_response.data);
 
         _todos.insert(0, resTodo);
+        NotificationApi.showNotification(
+          title: "Todos created sucessfully",
+          body: resTodo.title,
+        );
 
         print(resTodo);
       } else {
@@ -137,6 +142,10 @@ class TodosProvider extends ChangeNotifier {
         _isCreatingData = false;
 
         _todos[index] = updateResponse;
+        NotificationApi.showNotification(
+          title: "Todos updated sucessfully",
+          body: updateResponse.title,
+        );
       } else {
         print("heeeeeeeeeeeeee");
         _hasCreateError = true;
@@ -166,6 +175,10 @@ class TodosProvider extends ChangeNotifier {
       if (_response.statusCode == 200) {
         _isCreatingData = false;
         _todos.removeAt(index);
+        NotificationApi.showNotification(
+          title: "Todos deleted sucessfully",
+          body: "",
+        );
       } else {
         _hasCreateError = true;
         _createErrorMessage = "unable to update todos";

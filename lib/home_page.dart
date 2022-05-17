@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:todos_app/model/todos_model.dart';
+import 'package:todos_app/notification_api.dart';
 import 'package:todos_app/providers/todos_provider.dart';
 import 'package:todos_app/routes.dart';
 
@@ -17,6 +18,7 @@ class _HomePageState extends State<HomePage> {
     // TODO: implement initState
 
     context.read<TodosProvider>().fetchTodos();
+    NotificationApi.init();
   }
 
   @override
